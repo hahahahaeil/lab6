@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//商品类型
 public class Goodstype {
 
     @TableId(value = "id", type = IdType.AUTO)  // 表示 id 字段是自增的

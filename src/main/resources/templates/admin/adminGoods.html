@@ -49,6 +49,9 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">商品列表</h3>
 			</div>
+			<div th:if="${message}" class="alert alert-info">
+				<span th:text="${message}"></span>
+			</div>
 			<div class="panel-body">
 				<div class="table table-responsive">
 					<table class="table table-bordered table-hover">
@@ -72,6 +75,7 @@
 								<td>
 									<a th:href="@{goods/delete(id=${gds.id})}" onclick="return confirm('确认删除此商品吗？');">删除</a>
 								</td>
+
 								</td>
 							</tr>
 							<tr>

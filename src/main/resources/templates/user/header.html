@@ -5,9 +5,9 @@
 <title>导航页</title>
 <base th:href="@{/}"><!-- 不用base就使用th:src="@{/js/jquery.min.js} -->
 <!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <style type="text/css">
      .carousel{
          height: 200px;
@@ -30,6 +30,7 @@
 				<span class="navbar-brand">欢迎光临eBusiness</span>
 			</div>
 			<ul class="nav navbar-nav">
+<!--				注册的话跳注册、登录跳登录、后台跳后台登录-->
 				<li><a th:href="@{user/toRegister}">注册</a></li>
 				<li>
 					<a th:href="(${session.bUser} == null)?'user/toLogin':'#'" >
@@ -44,6 +45,7 @@
 				<li><a th:href="@{admin/toLogin}">后台</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
+<!--				这一部分，单一点击跳转单独页面即可-->
 				<li><a href="cart/userInfo">个人信息</a></li>
 				<li><a href="cart/selectCart">我的购物车</a></li>
 				<li><a href="cart/myFocus">我的收藏</a></li>

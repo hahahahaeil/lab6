@@ -58,10 +58,15 @@ public class GoodController {
     }
 //    如果商品在购物车的话，无法删除
     @GetMapping("/delete")
-    public String deleteType(@RequestParam("id") Integer id) {
-
+    public String deleteType(@RequestParam("id") Integer id,RedirectAttributes redirectAttributes) {
+        try {
             goodstableMapper.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "商品删除成功");
             return "redirect:/goods/selectAllGoodsByPage?currentPage=0"; // 重定向回列表页面
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "商品在购物车中，无法删除");
+            return "redirect:/goods/selectAllGoodsByPage?currentPage=0";
+        }
     }
     @GetMapping("detail")
     public String detail(@RequestParam("id") Integer id, Model model) {

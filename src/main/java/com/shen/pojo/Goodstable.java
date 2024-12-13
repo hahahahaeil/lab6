@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//商品信息表
 public class Goodstable {
     @TableId(value = "id", type = IdType.AUTO)  // 表示 id 字段是自增的
     private Integer id;

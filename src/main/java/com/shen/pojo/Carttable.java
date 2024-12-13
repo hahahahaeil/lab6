@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data             // Generates getters, setters, toString(), equals(), hashCode() methods
 @AllArgsConstructor // Generates a constructor with all arguments
 @NoArgsConstructor  // Generates a no-argument constructor
+//购物车
 public class Carttable {
     private int id;
     private int busertableId;   // Foreign key to Busertable

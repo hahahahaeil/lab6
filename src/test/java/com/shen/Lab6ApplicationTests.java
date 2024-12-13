@@ -47,4 +47,5 @@ class Lab6ApplicationTests {
         System.out.println(page.getRecords());
 //        System.out.println(page.getTotal());
     }
+
 }

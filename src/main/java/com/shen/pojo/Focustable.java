@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//关注表
 public class Focustable {
     private int id;
     private int goodstableId;

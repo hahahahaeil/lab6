@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//订单基础表
 public class Orderbasetable {
     private int id;
     private int busertableId;  // Foreign key reference to busertable
