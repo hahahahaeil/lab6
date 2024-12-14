@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 //购物车
 public class Carttable {
     private int id;
+//    用户id
     private int busertableId;   // Foreign key to Busertable
+//    商品id
     private int goodstableId;   // Foreign key to Goodstable
+//    商品数量
     private int shoppingnum;    // Number of items in the cart
 }

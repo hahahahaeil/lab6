@@ -1,17 +1,13 @@
 package com.shen.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.shen.pojo.Orderdetail;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-public interface OrderdetailMapper {
+@Repository
+public interface OrderdetailMapper extends BaseMapper<Orderdetail> {
 
-    void insertOrderdetail(Orderdetail orderdetail);
 
-    Orderdetail getOrderdetailById(int id);
-
-    List<Orderdetail> getAllOrderdetails();
-
-    void updateOrderdetail(Orderdetail orderdetail);
-
-    void deleteOrderdetail(int id);
 }

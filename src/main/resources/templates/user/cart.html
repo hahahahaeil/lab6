@@ -13,7 +13,7 @@
 			var pathName=window.document.location.pathname;
 			//截取，得到项目名称
 			var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
-			window.location.href = projectName + "/cart/deleteCart?gid=" +  obj;
+			window.location.href = projectName + "/delete?gid=" +  obj;
 		}
 	}
 	function clearCart(){
@@ -45,19 +45,24 @@
 							<th>小计</th>
 							<th>操作</th>
 						</tr>
-						<tr th:each="cart:${cartlist}">
+<!--						传回来商品列表-->
+						<tr th:each="good, iterStat :${goodsList}">
 							<td>
-								<a th:href="'goodsDetail?id=' + ${cart.id}"> 
-								<img th:src="'images/' + ${cart.gpicture}"
+								<a th:href="'goodsDetail?id=' + ${good.id}">
+								<img th:src="'images/' + ${good.gpicture}"
 									style="height: 50px; width: 50px; display: block;">
 								</a>
 							</td>
-							<td th:text="${cart.grprice}"></td>
-							<td th:text="${cart.shoppingnum}"></td>
-							<td th:text="${cart.smallsum}"></td>
+							<td th:text="${good.grprice}"></td>
+							<td th:text="${cartList[iterStat.index].shoppingnum}"></td>
+<!--							前端算出来-->
+							<td th:text="${smallsum}"></td>
 							<td>
-								<a th:href="'javascript:deleteCart('+${cart.id}+')'" >删除</a>
+								<a th:href="'javascript:deleteCart('+${cartList[iterStat.index].id}+')'" >删除</a>
 							</td>
+<!--							<td>-->
+<!--								<a th:href="@{/cart/delete(gid=${cartList[iterStat.index].id})}">删除</a>-->
+<!--							</td>-->
 						</tr>
 						<tr>
 							<td colspan="5">

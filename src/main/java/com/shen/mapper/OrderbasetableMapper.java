@@ -1,17 +1,12 @@
 package com.shen.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.shen.pojo.Orderbasetable;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-public interface OrderbasetableMapper {
+@Repository
+public interface OrderbasetableMapper extends BaseMapper<Orderbasetable> {
 
-    void insertOrderbasetable(Orderbasetable orderbasetable);
-
-    Orderbasetable getOrderbasetableById(int id);
-
-    List<Orderbasetable> getAllOrderbasetables();
-
-    void updateOrderbasetable(Orderbasetable orderbasetable);
-
-    void deleteOrderbasetable(int id);
 }

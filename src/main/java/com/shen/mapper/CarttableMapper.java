@@ -1,17 +1,13 @@
 package com.shen.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.shen.pojo.Carttable;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
+import java.util.Map;
 
-public interface CarttableMapper {
-
-    void insertCarttable(Carttable carttable);
-
-    Carttable getCarttableById(int id);
-
-    List<Carttable> getAllCarttables();
-
-    void updateCarttable(Carttable carttable);
-
-    void deleteCarttable(int id);
+@Repository
+public interface CarttableMapper extends BaseMapper<Carttable> {
+    public List<Map<String,Object>> selectGoodsShop(Integer uid);
 }

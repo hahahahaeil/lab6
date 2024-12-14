@@ -3,6 +3,7 @@ package com.shen.controller.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.shen.mapper.BusertableMapper;
 import com.shen.pojo.Busertable;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +27,15 @@ public class UserController {
         return "/user/login";
     }
     @PostMapping("/login")
-    public String login(@ModelAttribute("bUser") Busertable bUser, RedirectAttributes redirectAttributes) {
+    public String login(@ModelAttribute("bUser") Busertable bUser,
+                        RedirectAttributes redirectAttributes,
+                        HttpSession session) {
         // 从表单中获取输入的邮箱和密码
+
         String email = bUser.getBemail();
         String password = bUser.getBpwd();
+//        session.setAttribute("bUser", bUser);
+//        System.out.println("bUser存在，ID为：" + bUser.getId());
 
         // 查询数据库，查找该邮箱的用户信息
         QueryWrapper<Busertable> queryWrapper = new QueryWrapper<>();
@@ -39,6 +45,7 @@ public class UserController {
         // 验证用户是否存在以及密码是否匹配
         if (user != null && user.getBpwd().equals(password)) {
             // 登录成功，可以在 Session 中存储用户信息
+            session.setAttribute("user", user);
             return "/user/header"; // 跳转到用户主页或其他页面
         } else {
             // 登录失败，传递错误信息

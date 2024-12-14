@@ -31,7 +31,7 @@
 			</div>
 			<ul class="nav navbar-nav">
 <!--				注册的话跳注册、登录跳登录、后台跳后台登录-->
-				<li><a th:href="@{user/toRegister}">注册</a></li>
+				<li><a th:href="@{/user/register}">注册</a></li>
 				<li>
 					<a th:href="(${session.bUser} == null)?'user/toLogin':'#'" >
 						<span th:if="${session.bUser} == null" >
@@ -42,7 +42,8 @@
 						</span>
 					</a>
 				</li>
-				<li><a th:href="@{admin/toLogin}">后台</a></li>
+<!--				跳到后台管理员-->
+				<li><a th:href="@{/admin/login}">后台</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
 <!--				这一部分，单一点击跳转单独页面即可-->
