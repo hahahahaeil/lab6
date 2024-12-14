@@ -3,10 +3,7 @@ package com.shen.config;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
@@ -19,6 +16,16 @@ public class MyMvcConfig implements WebMvcConfigurer {
 //        // 映射/index请求到user/index视图
 //        registry.addViewController("/admin").setViewName("admin/login");
 //    }
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+    // 注册拦截器，并指定拦截路径
+    registry.addInterceptor(new LoginHandlerInterceptor())
+            .addPathPatterns("/**")   // 拦截/**路径
+            .excludePathPatterns("/admin/login")
+            .excludePathPatterns("/user/login")
+            .excludePathPatterns("/user/register")
+            .excludePathPatterns("/validateCode"); // 不拦截登录和注册页面
+}
 @Override
 public void addResourceHandlers(ResourceHandlerRegistry registry) {
     // 映射 /static/** 到 classpath:/static/

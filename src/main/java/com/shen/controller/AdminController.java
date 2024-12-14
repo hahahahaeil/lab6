@@ -2,6 +2,7 @@ package com.shen.controller;
 
 import com.shen.mapper.AusertableMapper;
 import com.shen.pojo.Ausertable;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +25,12 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("ausertable") Ausertable ausertable, Model model) {
+    public String login(@ModelAttribute("ausertable") Ausertable ausertable, Model model, HttpSession session) {
         // 使用用户名查询数据库，验证密码
         Ausertable existingUser = ausertableMapper.selectById(ausertable.getId());
         System.out.println(existingUser);
         if (existingUser != null && existingUser.getApwd().equals(ausertable.getApwd())) {
+            session.setAttribute("user", existingUser);
             // 如果用户名存在且密码匹配，则表示登录成功
             return "redirect:/admin/login";  // 跳转到仪表盘（根据需要调整）
         } else {
