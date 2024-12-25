@@ -55,8 +55,12 @@
 							</td>
 							<td th:text="${good.grprice}"></td>
 							<td th:text="${cartList[iterStat.index].shoppingnum}"></td>
-<!--							前端算出来-->
-							<td th:text="${smallsum}"></td>
+<!--							后端算吧，每一个商品数量乘*商品价格-->
+<!--							<td th:text="${smallsum}"></td>-->
+							<td>
+								<span th:text="${smMap[good.id]}"></span>
+							</td>
+
 							<td>
 								<a th:href="'javascript:deleteCart('+${cartList[iterStat.index].id}+')'" >删除</a>
 							</td>
@@ -67,7 +71,7 @@
 						<tr>
 							<td colspan="5">
 							<font style="color: #a60401; font-size: 13px; font-weight: bold; letter-spacing: 0px;">
-								购物金额总计(不含运费) ￥&nbsp;<span th:text="${total}"></span>元
+								购物金额总计(不含运费) ￥&nbsp;<span th:text="${Total_money}"></span>元
 							</font>
 							</td>
 						</tr>
@@ -78,7 +82,7 @@
 						</tr>
 						<tr>
 							<td colspan="5">
-								<a href="cart/selectCart?act=toCount" >去结算</a>
+								<a href="cart/toCount" >去结算</a>
 							</td>
 						</tr>
 					</tbody>

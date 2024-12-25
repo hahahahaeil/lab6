@@ -2,14 +2,8 @@ package com.shen;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.shen.mapper.AusertableMapper;
-import com.shen.mapper.CarttableMapper;
-import com.shen.mapper.GoodstableMapper;
-import com.shen.mapper.GoodstypeMapper;
-import com.shen.pojo.Ausertable;
-import com.shen.pojo.Carttable;
-import com.shen.pojo.Goodstable;
-import com.shen.pojo.Goodstype;
+import com.shen.mapper.*;
+import com.shen.pojo.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +24,25 @@ class Lab6ApplicationTests {
     private GoodstableMapper goodstableMapper;
     @Autowired
     CarttableMapper carttableMapper;
+    @Autowired
+    OrderbasetableMapper orderbasetableMapper;
+    @Test
+    void insert_Ob(){
+        Orderbasetable orderbasetable = new Orderbasetable();
+        orderbasetable.setBusertableId(9);
+        orderbasetable.setAmount(1000);
+        orderbasetableMapper.insert(orderbasetable);
+        //        插入订单详情表
+        QueryWrapper<Carttable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("busertable_id", 9);
+//        获取该用户的所有购物车表
+        List<Carttable> cartList = carttableMapper.selectObjs(queryWrapper);
+        Orderdetail orderdetail = new Orderdetail();
+        orderdetail.setOrderbasetableId(666);
+
+        System.out.println(cartList);
+    }
+
     @Test
     void contextLoads() {
         List<Ausertable> applicant =  ausertableMapper.selectList(null);

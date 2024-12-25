@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -36,6 +39,12 @@ public class AdminController {
         } else {
             // 如果用户名或密码错误，返回错误消息
             model.addAttribute("errorMessage", "用户名或密码错误");
+//            在这里还需要传过去广告图片
+            List<String> advertisementGoods = Arrays.asList(
+                    "static/images/202111309210614837.jpg",
+                    "static/images/202111309210632700.jpg",
+                    "static/images/202111311142912965.jpg");
+            model.addAttribute("advertisementGoods", advertisementGoods);
             return "/admin/header";  // 返回登录页面
         }
     }

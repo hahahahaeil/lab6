@@ -64,8 +64,9 @@
 		<div id="carousel-example-generic" class="carousel slide"
 			data-ride="carousel" style="margin-top: 20px;">
 			<!-- Indicators 小圆圈-->
+			<!--				动态生成轮播图指示器（carousel-indicators）-->
 			<ol class="carousel-indicators">
-				<li data-target="#carousel-example-generic" 
+				<li data-target="#carousel-example-generic"
 				th:each="advertise,adstat:${advertisementGoods}" 
 				th:data-slide-to="${adstat.index}"
 				th:class="(${adstat.index}==0)? 'active' : ''"></li>
