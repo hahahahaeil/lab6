@@ -26,6 +26,15 @@ class Lab6ApplicationTests {
     CarttableMapper carttableMapper;
     @Autowired
     OrderbasetableMapper orderbasetableMapper;
+    @Autowired
+    FocustableMapper focustableMapper;
+    @Test
+    void seek_fc(){
+        QueryWrapper<Focustable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("busertable_id", 9).select("goodstable_id");
+        List<Integer> goodstableIds = focustableMapper.selectObjs(queryWrapper);
+        System.out.println(goodstableIds);
+    }
     @Test
     void insert_Ob(){
         Orderbasetable orderbasetable = new Orderbasetable();

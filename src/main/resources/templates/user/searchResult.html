@@ -1,46 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<base th:href="@{/}"><!-- 不用base就使用th:src="@{/js/jquery.min.js} -->
-<meta charset="UTF-8">
-<title>主页</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-
-<script src="js/jquery.min.js"></script>
+	<base th:href="@{/}">
+	<meta charset="UTF-8">
+	<title>主页</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<script src="js/jquery.min.js"></script>
 </head>
 <body>
-	<!-- 加载header.html -->
-	<div th:include="user/header"></div>
-	<div class="container">
-		<div>
-			<h4>搜索结果</h4>
-		</div>
-		<div class="row">
-			<div class="col-xs-6 col-md-2" th:each="rGoods:${searchgoods}">
-				<a th:href="'goodsDetail?id=' + ${rGoods.id}" class="thumbnail"> <img
-					alt="100%x180" th:src="'images/' + ${rGoods.gpicture}"
-					style="height: 180px; width: 100%; display: block;">
-				</a>
-				<div class="caption" style="text-align: center;">
-					<div>
-						<span th:text="${rGoods.gname}"></span>
-					</div>
-					<div>
-						<span style="color: red;">&yen;
-							<span th:text="${rGoods.grprice}"></span>
-						</span>
-						<span class="text-dark" style="text-decoration: line-through;"> &yen;
-							<span th:text="${rGoods.goprice}"></span>
-						</span>
-					</div>
-<!--					<a th:href="'javascript:focus('+ ${rGoods.id} +')'" class="btn btn-primary"-->
-<!--						style="font-size: 10px;">加入收藏</a>-->
-					<a th:href="@{/cart/focus/{id}(id=${rGoods.id})}" class="btn btn-primary"
-					   style="font-size: 10px;">加入收藏</a>
-
+<!-- 加载header.html -->
+<div th:include="user/header"></div>
+<div class="container">
+	<div>
+		<h4>搜索结果</h4>
+	</div>
+	<div class="row">
+		<div class="col-xs-6 col-md-2" th:each="rGoods:${searchgoods}">
+			<a th:href="'goodsDetail?id=' + ${rGoods.id}" class="thumbnail">
+				<img alt="100%x180" th:src="'images/' + ${rGoods.gpicture}"
+					 style="height: 180px; width: 100%; display: block;">
+			</a>
+			<div class="caption" style="text-align: center;">
+				<div>
+					<span th:text="${rGoods.gname}"></span>
 				</div>
+				<div>
+                        <span style="color: red;">&yen;
+                            <span th:text="${rGoods.grprice}"></span>
+                        </span>
+					<span class="text-dark" style="text-decoration: line-through;"> &yen;
+                            <span th:text="${rGoods.goprice}"></span>
+                        </span>
+				</div>
+				<!-- 使用 AJAX 提交收藏操作 -->
+				<a href="javascript:void(0);" class="btn btn-primary"
+				   style="font-size: 10px;" th:onclick="'addToFavorites(' + ${rGoods.id} + ')'" >加入收藏</a>
+
 			</div>
 		</div>
 	</div>
+</div>
+
+<script type="text/javascript">
+	// 使用 jQuery 的 AJAX 进行收藏操作
+	function addToFavorites(goodId) {
+		$.ajax({
+			url: '/cart/focus/' + goodId,  // 后端路径
+			type: 'GET',  // 发送 GET 请求
+			success: function(response) {
+				// 假设后端返回一个局部 HTML 内容，这里更新相应的部分
+				alert("成功加入收藏！");
+				// 你可以在这里更新页面内容，假设返回的数据是要更新的部分
+				// 比如更新收藏按钮的样式、文字或其他部分的内容
+				// $('#favorite-button').html(response); // 示例：如果返回了一个新的按钮HTML
+			},
+			error: function(xhr, status, error) {
+				alert("加入收藏失败，请重试！");
+			}
+		});
+	}
+</script>
 </body>
 </html>

@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/cart")
@@ -34,6 +31,9 @@ public class CartController {
     OrderdetailMapper orderdetailMapper;
     @Autowired
     FocustableMapper focustableMapper;
+    @Autowired
+    GoodstypeMapper goodstypeMapper;
+
     @RequestMapping("/userInfo")
     public String userInfo() {
         return "user/userInfo";
@@ -154,7 +154,36 @@ public class CartController {
         return "user/header";
     }
 
-//
+//    我的收藏
+    @RequestMapping("myFocus")
+    public String myFocus(Model model, HttpSession session) {
+//        获取用户信息
+        Busertable bUser = (Busertable) session.getAttribute("user");
+        System.out.println(bUser);
+        Integer Bid = bUser.getId();
+//        查询该用户的收藏
+//        这东西要传的是该用户收藏的所有商品详细
+//        所以要传的是一个商品列表
+        QueryWrapper<Focustable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("busertable_id", Bid).select("goodstable_id");
+        List<Integer> goodstableIds = focustableMapper.selectObjs(queryWrapper);
+        List<Goodstable> goodsList = goodstableMapper.selectByIds(goodstableIds);
+//        List<Focustable> myFocus = focustableMapper.selectList(queryWrapper);
+//            传各类型商品过去
+        List<Goodstype> goodsType = goodstypeMapper.selectList(null);
+//            传轮播广告过去
+        List<String> advertisementGoods = Arrays.asList(
+                "202111311142959226.jpg",
+                "202111311142912965.jpg",
+                "202111311142932272.jpg");
+        model.addAttribute("goodsType", goodsType);
+        model.addAttribute("advertisementGoods", advertisementGoods);
+        model.addAttribute("myFocus", goodsList);
+//        model.addAttribute("myFocus", myFocus);
+        return "user/myFocus";
+
+    }
+//  收藏商品
     @RequestMapping("/focus/{id}")
     public String focus(@PathVariable("id") Integer id,Model model,HttpSession session) {
 //        完成收藏操作
@@ -163,7 +192,6 @@ public class CartController {
         focustable.setBusertableId(bUser.getId());
         focustable.setGoodstableId(id);
         focustableMapper.insert(focustable);
-
         return "user/searchResult";
     }
 
