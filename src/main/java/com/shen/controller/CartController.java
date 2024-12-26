@@ -82,7 +82,6 @@ public class CartController {
                 // 将商品 ID 和对应的小计存入 Map
                 smMap.put(goodstableId, sm);
                 Total_money += sm;
-
             }
         }
         session.setAttribute("Total_money", Total_money);
@@ -99,6 +98,7 @@ public class CartController {
     public String toCount(Model model, HttpSession session) {
         //        填两个表 填订单基础表某个用户花了多少钱、并记录时间
 //        将购物车的信息填入订单详情表，并且清空这个人的购物车
+//        生成订单表，状态为0，生成订单详情表，将该订单状态改为1
         Busertable bUser = (Busertable) session.getAttribute("user");
         Integer id = bUser.getId();
         // 从 session 中获取 Total_money
@@ -108,6 +108,7 @@ public class CartController {
         if (totalMoneyObj instanceof Double) {
             Total_money = (Double) totalMoneyObj;
         }
+
         Orderbasetable orderbasetable = new Orderbasetable();
         orderbasetable.setBusertableId(id);
         orderbasetable.setAmount(Total_money);
@@ -118,17 +119,22 @@ public class CartController {
         queryWrapper.eq("busertable_id", id);
 //        获取该用户的所有购物车表
         List<Carttable> cartList = carttableMapper.selectList(queryWrapper);
-//        Orderdetail orderdetail = new Orderdetail();
 ////        与订单表关联
-//        orderdetail.setOrderbasetableId(orderbasetable.getId());
+        QueryWrapper<Orderbasetable> queryOrderbasetable = new QueryWrapper<>();
+        queryOrderbasetable.eq("busertable_id", id).eq("status", (byte) 0);
+        Orderbasetable orderbase = orderbasetableMapper.selectOne(queryOrderbasetable);
+        System.out.println(orderbase);
         for (Carttable cart : cartList) {
             Orderdetail orderdetail = new Orderdetail();
-            orderdetail.setOrderbasetableId(orderbasetable.getBusertableId());  // 将订单ID关联到订单详情
+            orderdetail.setOrderbasetableId(orderbase.getId());  // 将订单ID关联到订单详情
             orderdetail.setGoodstableId(cart.getGoodstableId());  // 设置商品ID
             orderdetail.setShoppingnum(cart.getShoppingnum());  // 设置商品数量
             // 插入订单详情表
             orderdetailMapper.insert(orderdetail);
         }
+        orderbase.setStatus((byte) 1);
+        orderbasetableMapper.updateById(orderbase);
+
 //        删除原有的购物车表,根据用户id
         HashMap<String,Object> map = new HashMap<>();
         map.put("busertable_id", id);
@@ -168,7 +174,6 @@ public class CartController {
         queryWrapper.eq("busertable_id", Bid).select("goodstable_id");
         List<Integer> goodstableIds = focustableMapper.selectObjs(queryWrapper);
         List<Goodstable> goodsList = goodstableMapper.selectByIds(goodstableIds);
-//        List<Focustable> myFocus = focustableMapper.selectList(queryWrapper);
 //            传各类型商品过去
         List<Goodstype> goodsType = goodstypeMapper.selectList(null);
 //            传轮播广告过去
@@ -179,7 +184,6 @@ public class CartController {
         model.addAttribute("goodsType", goodsType);
         model.addAttribute("advertisementGoods", advertisementGoods);
         model.addAttribute("myFocus", goodsList);
-//        model.addAttribute("myFocus", myFocus);
         return "user/myFocus";
 
     }
