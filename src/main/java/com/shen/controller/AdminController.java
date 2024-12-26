@@ -40,11 +40,6 @@ public class AdminController {
             // 如果用户名或密码错误，返回错误消息
             model.addAttribute("errorMessage", "用户名或密码错误");
 //            在这里还需要传过去广告图片
-            List<String> advertisementGoods = Arrays.asList(
-                    "static/images/202111309210614837.jpg",
-                    "static/images/202111309210632700.jpg",
-                    "static/images/202111311142912965.jpg");
-            model.addAttribute("advertisementGoods", advertisementGoods);
             return "/admin/header";  // 返回登录页面
         }
     }

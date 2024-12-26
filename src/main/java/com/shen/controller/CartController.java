@@ -9,6 +9,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("cart")
+@RequestMapping("/cart")
 public class CartController {
     @Autowired
     BusertableMapper busertableMapper;
@@ -31,6 +32,8 @@ public class CartController {
     OrderbasetableMapper orderbasetableMapper;
     @Autowired
     OrderdetailMapper orderdetailMapper;
+    @Autowired
+    FocustableMapper focustableMapper;
     @RequestMapping("/userInfo")
     public String userInfo() {
         return "user/userInfo";
@@ -150,6 +153,20 @@ public class CartController {
         carttableMapper.delete(queryWrapper);
         return "user/header";
     }
+
+//
+    @RequestMapping("/focus/{id}")
+    public String focus(@PathVariable("id") Integer id,Model model,HttpSession session) {
+//        完成收藏操作
+        Busertable bUser = (Busertable) session.getAttribute("user");
+        Focustable focustable = new Focustable();
+        focustable.setBusertableId(bUser.getId());
+        focustable.setGoodstableId(id);
+        focustableMapper.insert(focustable);
+
+        return "user/searchResult";
+    }
+
 }
 //@RequestMapping("/selectCart")
 //    public String selectCart(Model model, HttpSession session) {
