@@ -23,17 +23,17 @@
 							<th>商品购买价</th>
 							<th>购买数量</th>
 						</tr>
-						<tr th:each="od:${orderDetail}">
+						<tr th:each="od,odstat:${orderDetail}">
 							<td th:text="${od.id}"></td>
 							<td>
-								<a th:href="'goodsDetail?id=' + ${od.id}"> 
+								<a th:href="'goodsDetail?id=' + ${od.id}">
 								<img th:src="'images/' + ${od.gpicture}"
 									style="height: 50px; width: 50px; display: block;">
 								</a>
 							</td>
 							<td th:text="${od.gname}"></td>
 							<td th:text="${od.grprice}"></td>
-							<td th:text="${od.shoppingnum}"></td>
+							<td th:text="${Order[odstat.index].shoppingnum}"></td>
 						</tr>
 					</tbody>
 				</table>

@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
@@ -35,6 +32,7 @@ public class UserController {
         model.addAttribute("bUser", new Busertable());
         return "/user/login";
     }
+
 
     @PostMapping("/login")
     public String login(@ModelAttribute("bUser") Busertable bUser,
@@ -66,7 +64,7 @@ public class UserController {
                     "202111311142932272.jpg");
             model.addAttribute("goodsType", goodsType);
             model.addAttribute("advertisementGoods", advertisementGoods);
-            return "/user/header"; // 跳转到用户主页或其他页面
+            return "redirect:/index "; // 跳转到用户主页或其他页面
         } else {
             // 登录失败，传递错误信息
             redirectAttributes.addFlashAttribute("errorMessage", "邮箱或密码错误！");

@@ -91,6 +91,17 @@ public class CartController {
         model.addAttribute("goodsList", goodsList);
         model.addAttribute("smMap", smMap);
         model.addAttribute("Total_money", Total_money);
+
+        //            传各类型商品过去
+        List<Goodstype> goodsType = goodstypeMapper.selectList(null);
+//            传轮播广告过去
+        List<String> advertisementGoods = Arrays.asList(
+                "202111311142959226.jpg",
+                "202111311142912965.jpg",
+                "202111311142932272.jpg");
+        model.addAttribute("goodsType", goodsType);
+        model.addAttribute("advertisementGoods", advertisementGoods);
+
         return "user/cart";
     }
 //  结算
@@ -140,6 +151,7 @@ public class CartController {
         map.put("busertable_id", id);
         carttableMapper.deleteByMap(map);
 //        结算成功返回首页
+
         return "user/header";
     }
     @RequestMapping("delete")
@@ -157,7 +169,7 @@ public class CartController {
         queryWrapper.eq("busertable_id", Bid);
 //        delete 会根据查询条件进行删除
         carttableMapper.delete(queryWrapper);
-        return "user/header";
+        return "redirect:/index";
     }
 
 //    我的收藏
@@ -198,7 +210,64 @@ public class CartController {
         focustableMapper.insert(focustable);
         return "user/searchResult";
     }
+//  我的订单
+    @RequestMapping("/myOder")
+    public String myOder(Model model, HttpSession session) {
+//  查这个人的所有订单表
+        Busertable bUser = (Busertable) session.getAttribute("user");
+        QueryWrapper<Orderbasetable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("busertable_id", bUser.getId());
+        List<Orderbasetable> orderbasetables = orderbasetableMapper.selectList(queryWrapper);
 
+        //            传各类型商品过去
+        List<Goodstype> goodsType = goodstypeMapper.selectList(null);
+//            传轮播广告过去
+        List<String> advertisementGoods = Arrays.asList(
+                "202111311142959226.jpg",
+                "202111311142912965.jpg",
+                "202111311142932272.jpg");
+        model.addAttribute("goodsType", goodsType);
+        model.addAttribute("advertisementGoods", advertisementGoods);
+
+        model.addAttribute("myOrder", orderbasetables);
+        return "user/myOrder";
+    }
+    @RequestMapping("/orderDetail/{id}")
+    public String orderDetail(@PathVariable("id") Integer id,Model model,HttpSession session) {
+//        获取订单表id，根据订单表id获取订单详情表
+//        颠，需要根据订单表有的商品去查商品表
+//        还需要传回商品总量
+//        传两个对象，某条订单详情，某条商品记录
+        QueryWrapper<Orderdetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("orderbasetable_id", id);
+        List<Orderdetail> orderdetails = orderdetailMapper.selectList(queryWrapper);
+//        遍历这个列表，获取对应的商品id
+        // 遍历订单详情列表
+        List<Goodstable> goodstableList = new ArrayList<>();
+        for (Orderdetail orderdetail : orderdetails) {
+            // 获取当前订单详情的商品ID
+            Integer goodId = orderdetail.getGoodstableId();
+
+            // 使用商品ID查询商品表
+            QueryWrapper<Goodstable> goodQueryWrapper = new QueryWrapper<>();
+            goodQueryWrapper.eq("id", goodId);
+            Goodstable good = goodstableMapper.selectOne(goodQueryWrapper);
+
+            // 处理查询到的商品信息
+            if (good != null) {
+                // 如果存在，存入列表
+                goodstableList.add(good);
+            } else {
+                // 如果未找到商品，处理这种情况
+                System.out.println("商品ID " + goodId + " 未找到");
+            }
+        }
+//        传过去一个详情
+        model.addAttribute("orderDetail", goodstableList);
+//        传过去一个用来看总数
+        model.addAttribute("Order", orderdetails);
+        return "user/orderDetail";
+    }
 }
 //@RequestMapping("/selectCart")
 //    public String selectCart(Model model, HttpSession session) {

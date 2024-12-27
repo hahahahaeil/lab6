@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,20 @@ public class IndexController {
     GoodstableMapper goodstableMapper;
     @Autowired
     GoodstypeMapper goodstypeMapper;
+
+    @RequestMapping("/index")
+    public String Index(Model model){
+        //            传各类型商品过去
+        List<Goodstype> goodsType = goodstypeMapper.selectList(null);
+//            传轮播广告过去
+        List<String> advertisementGoods = Arrays.asList(
+                "202111311142959226.jpg",
+                "202111311142912965.jpg",
+                "202111311142932272.jpg");
+        model.addAttribute("goodsType", goodsType);
+        model.addAttribute("advertisementGoods", advertisementGoods);
+        return "user/header";
+    }
 //    模糊搜索某个商品
     @RequestMapping("/search")
     public String search(Model model, String mykey) {
