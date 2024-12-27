@@ -1,11 +1,10 @@
-package com.shen.controller;
+package com.shen.controller.User;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.shen.mapper.*;
 import com.shen.pojo.*;
 import jakarta.servlet.http.HttpSession;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +46,8 @@ public class CartController {
         Busertable user = busertableMapper.selectOne(queryWrapper);
         user.setBpwd(bpwd);
         busertableMapper.updateById(user);
-        return "user/header";
+//        return "user/header";
+        return "redirect:/index";
 // 修改成功跳回原来页面
     }
     @RequestMapping("/selectCart")

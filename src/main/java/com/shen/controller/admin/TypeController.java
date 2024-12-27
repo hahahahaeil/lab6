@@ -1,17 +1,14 @@
-package com.shen.controller;
+package com.shen.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shen.mapper.GoodstypeMapper;
 import com.shen.pojo.Goodstype;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 
 //requestParam强势绑定参数
@@ -26,25 +23,7 @@ public class TypeController {
         this.goodstypeMapper = goodstypeMapper;
     }
 
-//    @RequestMapping("/selectAllTypeByPage")
-//    public String selectAllTypeByPage(@RequestParam(defaultValue = "1") int currentPage, Model model) {
-//        // 处理请求，获取分页数据
-//        model.addAttribute("currentPage", currentPage);
-//        // 返回页面
-//        return "/admin/selectGoodsType";
-//    }
-//@RequestMapping("/selectAllTypeByPage")
-//public String selectAllTypeByPage(@RequestParam(defaultValue = "1") int currentPage, Model model) {
-//    // 处理请求，获取分页数据
-//    Page<Goodstype> gts = new Page<>(1, 5);
-//    goodstypeMapper.selectPage(gts, null);
-//    // 将分页数据添加到模型中
-//    model.addAttribute("allTypes", gts.getPages());  // 当前页的内容
-//    model.addAttribute("currentPage", currentPage);
-//    model.addAttribute("totalPage", gts.getTotal());
-//    // 返回页面
-//    return "/admin/selectGoodsType";
-//}
+
 @RequestMapping("/selectAllTypeByPage")
 public String selectAllTypeByPage(@RequestParam(defaultValue = "1") int currentPage, Model model) {
     int pageSize = 5;  // 每页显示5条记录

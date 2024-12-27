@@ -1,4 +1,4 @@
-package com.shen.controller;
+package com.shen.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shen.mapper.GoodstableMapper;
@@ -22,12 +22,6 @@ public class GoodController {
     GoodstypeMapper goodstypeMapper;
     // 显示商品列表，支持分页
 
-    // 跳转到商品列表页面
-//    @RequestMapping("/toGoods")
-//    public String toAddGoods(Model model) {
-//        model.addAttribute("goodstable", new Goodstable());
-//        return "admin/adminGoods";
-//    }
 
     @RequestMapping("/selectAllGoodsByPage")
     public String selectAllGoodsByPage(@RequestParam(defaultValue = "0") int currentPage, Model model) {
