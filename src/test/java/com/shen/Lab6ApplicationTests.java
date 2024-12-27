@@ -29,6 +29,16 @@ class Lab6ApplicationTests {
     @Autowired
     FocustableMapper focustableMapper;
     @Test
+    void seek_page(){
+        int pageSize = 5;  // 每页显示的记录数
+        Page<Orderbasetable> page = new Page<>(1, pageSize);
+//        获取全部
+        orderbasetableMapper.selectPage(page, null);
+//       返回当前页
+        List<Orderbasetable> orders = page.getRecords();
+        System.out.println(orders);
+    }
+    @Test
     void seek_fc(){
         QueryWrapper<Focustable> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("busertable_id", 9).select("goodstable_id");

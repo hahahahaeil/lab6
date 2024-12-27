@@ -89,4 +89,5 @@ public class GoodController {
         goodstableMapper.updateById(goodstable);
         return "redirect:/goods/selectAllGoodsByPage?currentPage=0";
     }
+
 }

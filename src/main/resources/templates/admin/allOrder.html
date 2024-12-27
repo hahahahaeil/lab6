@@ -40,10 +40,10 @@
 										<li><a>共<span th:text="${totalPage}" ></span>页</a></li>
 										<li>
 											<span th:if="${currentPage} != 1" >
-												<a th:href="@{selectOrder?currentPage=${currentPage - 1}}">上一页</a>
+           											 <a th:href="@{selectOrder(currentPage=${currentPage - 1})}">上一页</a>
 											</span>
 											<span th:if="${currentPage} != ${totalPage}" >
-												<a th:href="@{selectOrder?currentPage=${currentPage - 1}}">下一页</a>
+           											 <a th:href="@{selectOrder(currentPage=${currentPage + 1})}">下一页</a>
 											</span>
 										</li>
 									</ul>

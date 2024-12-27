@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Random;
 
+//验证码控制器
 @RestController
 @RequestMapping("/validateCode")
 public class CaptchaController{
